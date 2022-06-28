@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    x:Class="CRUDSCHOOL.Views.ListSchools">
+    <ContentPage.Content>
+
+
+        <StackLayout Margin="20,0,20,0" Orientation="Vertical">
+
+            <Label Text="Listar colegios" HorizontalOptions="CenterAndExpand"
+                   FontSize="Title" FontAttributes="Italic" Margin="20,20,20,0" />
+
+            <StackLayout>
+
+                <StackLayout Margin="20,0,20,0">
+
+                    <Entry Text="{Binding txtSchoolId}" IsEnabled="False"/>
+                    <Entry Text="{Binding txtName}"  />
+                    <DatePicker
+                            Date="{Binding txtDateFundation}"
+                         MaximumDate="{Binding Source={x:Static sys:DateTime.Now}}"
+                         Format="dd/MM/yyyy" />
+                        <Picker  SelectedItem="{Binding txtValidate}" >  
+                            <Picker.Items>  
+                                <x:String>Sí</x:String>  
+                                <x:String>No</x:String>  
+                            </Picker.Items>  
+                        </Picker>  
+
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,20">
+
+                        <Button Text="Guardar" HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Blue"
+                            TextColor="White"
+                            CornerRadius="30"
+                            Command="{Binding UpdateCommand}"
+                            />
+
+                        <Button Text="Eliminar"
+                               HorizontalOptions="FillAndExpand" CornerRadius="30"
+                               TextColor="White" BackgroundColor="Red"
+                               Command="{Binding DeleteCommand}"/>
+
+                        <Button Text="Refrescar"  Command="{Binding ListCommand}"
+                               HorizontalOptions="FillAndExpand" CornerRadius="30"
+                               TextColor="White" BackgroundColor="GreenYellow" />
+
+                    </StackLayout>
+
+
+                </StackLayout>
+
+            </StackLayout>
+
+            
+                <ScrollView>
+
+                    <ListView x:Name="MyList" ItemsSource="{Binding Schools}" HasUnevenRows="True">
+                            <ListView.ItemTemplate >
+                                <DataTemplate >
+                                    <ViewCell>
+
+
+
+                                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+                                
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+                                                <Label Text="{Binding SchoolId}" FontAttributes="Bold" FontSize="18"/>
+
+                                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18" />
+
+
+                                            </StackLayout>
+                  
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+                                                <Label Text="{Binding DateFundation, StringFormat='{0:MMMM dd, yyyy}'}"
+                                                       FontAttributes="Bold" FontSize="18"/>
+
+                                                <Label Text="{ Binding Enabled, StringFormat=' ¿Habilitado? : {0:F0}'}"
+                                                FontAttributes="Bold" FontSize="18" />
+
+                                                
+
+                                            </StackLayout>
+
+                                            <StackLayout Orientation="Horizontal" Padding="10" >
+
+                                                <Button BackgroundColor="LightGray" Text="Seleccionar"  HorizontalOptions="FillAndExpand"
+
+                                                    CornerRadius="30"
+                                                    Command="{Binding Path=BindingContext.ShowCommand, Source={x:Reference Name=MyList}}"
+                                                    CommandParameter="{Binding SchoolId}"
+                                                     />
+
+                                            </StackLayout>
+
+                                        </StackLayout>
+
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                </ScrollView>   
+          
+       </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
+
